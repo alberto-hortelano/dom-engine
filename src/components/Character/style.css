@@ -1,0 +1,12 @@
+.character {
+	/* border-radius: 100%; */
+	width: 100px;
+	height: 100px;
+	background-color: blue;
+}
+.character.player {
+	background-color: yellow;
+}
+.character.enemy {
+	background-color: red;
+}
