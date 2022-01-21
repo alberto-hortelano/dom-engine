@@ -1,0 +1,53 @@
+.board {
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-image: url(./grass.jpg);
+	background-position: 0% 0%;
+	overflow: hidden;
+}
+.menu {
+	position: fixed;
+	top: 0;
+	right: 0;
+	left: 0;
+	height: 40px;
+	z-index: 999999;
+	background: rgba(0, 0, 0, 0.3);
+}
+.board.debug {
+	#line {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 60px;
+		height: 2px;
+		background-color: red;
+		z-index: 999999;
+		transform: rotate(27deg);
+		transform-origin: top left;
+	}
+	#circle {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 60px;
+		height: 60px;
+		border-radius: 100%;
+		border: 1px solid red;
+		z-index: 999999;
+	}
+	.mark {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 0;
+		height: 0;
+		box-shadow: 0 0 0 2px #ccc;
+		border-radius: 100%;
+		z-index: 999999;
+	}
+	#end.mark {
+		box-shadow: 0 0 0 2px black;
+	}
+}

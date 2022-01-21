@@ -1,4 +1,11 @@
-# UnReact
-## V1: Dots
-Move dots on a blank field
-## Update from other account
+# UnReact Engine
+
+## Movement
+
+
+## Art
+https://opengameart.org/content/flare
+
+## TODO
+Fix orientation change on collisions so that Itinerants slide if angle < 90deg
+

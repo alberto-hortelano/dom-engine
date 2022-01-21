@@ -1,0 +1,18 @@
+.obstacle {
+	bottom: 0;
+	left: 0;
+	&.wall {
+		background-image: url(./walls/hjm-tileable_dungeon_wall.png);
+		width: 100%;
+		height: 112px;
+		background-size: 300px;
+		&.north-west {
+			background-position-x: 71px;
+			background-position-y: -53px;
+		}
+		&.north-east {
+			background-position-x: 154px;
+			background-position-y: -53px;
+		}
+	}
+}

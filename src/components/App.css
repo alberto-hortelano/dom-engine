@@ -1,0 +1,10 @@
+:root {
+	--xFactor: 0.454;
+	--yFactor: 0.891;
+}
+.App {
+	text-align: center;
+}
+/* body {
+	overflow: hidden;
+} */
