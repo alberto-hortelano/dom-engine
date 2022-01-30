@@ -50,7 +50,9 @@ export const reducer = (game: Game, action: Action): Game => {
 				selected: action.selected,
 			};
 		case 'selectTarget':
-			if (selected) selected.target = action.target;
+			if (selected) {
+				selected.target = action.target;
+			}
 			return {
 				...game,
 			};

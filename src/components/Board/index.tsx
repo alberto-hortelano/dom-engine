@@ -36,6 +36,10 @@ const fillMap = <T extends Positionable>(partials: Partial<T>[], constructor: (p
 }, new Map<T['id'], T>())
 const arrLength = 100;
 const debounceFactor = 10;
+const actions = ['run', 'walk', 'attack', 'defend']
+while (actions.length < 25) {
+	actions.push(`action${actions.length - 3}`)
+}
 export default function RxBoard({ startRunning, size, allies, enemies, obstacles, selected }: Props) {
 	const [time, setTime] = useState(0);
 	const [debouncer, setDebouncer] = useState(0);
@@ -104,6 +108,25 @@ export default function RxBoard({ startRunning, size, allies, enemies, obstacles
 	>
 		<div className='menu'>
 			<button onClick={() => { dispatch({ type: 'switch' }) }}>{game.running ? 'Stop' : 'Start'}</button>
+			<select name="action" id="action"
+				onChange={e => {
+					game.allies.forEach(ally => {
+						ally.action = e.target.value as any;
+					})
+					dispatch({
+						type: 'debug',
+						game: {
+							...game,
+						}
+					})
+				}}>
+				{
+					actions.map((action, k) => <option key={k} value={action}>{action}</option>)
+				}
+			</select>
+			<button onClick={() => {
+
+			}}>Action: {game.allies.get(game.selected)?.action}</button>
 			<button onClick={() => {
 				if (fullScreen) {
 					document.exitFullscreen();

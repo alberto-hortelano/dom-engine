@@ -1,6 +1,7 @@
 
 import { Action } from "../state/reducer";
-import { Game } from "./game";
+import { selectTarget } from "./combat";
+import { Game, getSelected } from "./game";
 import { isMovementKeyCode, MovementKeyCode } from './movement';
 import { KeyEvent } from "./types";
 
@@ -13,13 +14,19 @@ export const onKeyPress = (keyEvent: KeyEvent, dispatch: (action: Action) => voi
 			keyEvent
 		})
 	} else if (keyEvent.code === 'Space' && keyEvent.type === 'keydown') {
-		// if (game.selected?.target) {
-		// 	// dispatch({
-		// 	// 	type: 'selectTarget',
-		// 	// 	target: 
-		// 	// })
-		// } else {
-
-		// }
+		const selected = getSelected(game);
+		if (selected) {
+			if (selected.target) {
+				dispatch({
+					type: 'selectTarget',
+					target: 0,
+				})
+			} else {
+				dispatch({
+					type: 'selectTarget',
+					target: selectTarget(selected, game.enemies),
+				})
+			}
+		}
 	}
 }

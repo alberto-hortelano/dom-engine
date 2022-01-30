@@ -25,6 +25,6 @@ export const defaultState: Game = {
 	itinerants: new Map(),
 	allies: new Map(),
 	enemies: new Map(),
-	selected: -1,
+	selected: 0,
 }
 export const getSelected = (game: Game) => game.allies.get(game.selected);

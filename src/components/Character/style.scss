@@ -1,0 +1,114 @@
+.character {
+	--size: 128px;
+	--steps: 32;
+	width: var(--size);
+	height: var(--size);
+	bottom: -16px;
+	left: -43px;
+	background-size: calc(var(--size) * var(--steps));
+	background-position-x: calc(var(--size) * var(--steps));
+	background-position-y: calc(var(--size) * 2);
+	/* box-shadow: inset 0 0 0 1px #000000; */
+	background-image: url(./isometric_hero/numbers.png), url(./isometric_hero/male_head1.png),
+		url(./isometric_hero/shield.png), url(./isometric_hero/longsword.png);
+	animation: iddle 1s steps(3) infinite;
+	&.enemy {
+		background-image: url(./enemies/orc_elite_0.png);
+	}
+	&.iddle {
+		background-position-x: calc(var(--size) * 32);
+		animation: iddle 1s steps(3) infinite;
+	}
+	&.run {
+		background-position-x: calc(var(--size) * 28);
+		animation: run 1s steps(8) infinite;
+	}
+	&.west {
+		background-position-y: calc(var(--size) * 8);
+	}
+	&.north-west {
+		background-position-y: calc(var(--size) * 7);
+	}
+	&.north {
+		background-position-y: calc(var(--size) * 6);
+	}
+	&.north-east {
+		background-position-y: calc(var(--size) * 5);
+	}
+	&.east {
+		background-position-y: calc(var(--size) * 4);
+	}
+	&.south-east {
+		background-position-y: calc(var(--size) * 3);
+	}
+	&.south {
+		background-position-y: calc(var(--size) * 2);
+	}
+	&.south-west {
+		background-position-y: calc(var(--size) * 1);
+	}
+	&.walk {
+		background-position-x: calc(var(--size) * 28);
+		animation: walk 1s steps(1) infinite;
+	}
+	&.attack {
+		background-position-x: calc(var(--size) * 20);
+		animation: attack 2s steps(4) infinite;
+	}
+	&.defend {
+		background-position-x: calc(var(--size) * 29);
+		animation: defend 2s steps(1) infinite;
+	}
+}
+@keyframes defend {
+	0% {
+		background-position-x: calc(var(--size) * 29);
+	}
+	25% {
+		background-position-x: calc(var(--size) * 16);
+	}
+	50% {
+		background-position-x: calc(var(--size) * 15);
+	}
+	75% {
+		background-position-x: calc(var(--size) * 16);
+	}
+	100% {
+		background-position-x: calc(var(--size) * 29);
+	}
+}
+@keyframes attack {
+	to {
+		background-position-x: calc(var(--size) * 16);
+	}
+}
+@keyframes walk {
+	0% {
+		background-position-x: calc(var(--size) * 29);
+	}
+	25% {
+		background-position-x: calc(var(--size) * 22);
+	}
+	50% {
+		background-position-x: calc(var(--size) * 21);
+	}
+	75% {
+		background-position-x: calc(var(--size) * 28);
+	}
+	100% {
+		background-position-x: calc(var(--size) * 29);
+	}
+}
+@keyframes iddle {
+	50% {
+		background-position-x: calc(var(--size) * 29);
+	}
+	100% {
+		background-position-x: calc(var(--size) * 32);
+	}
+}
+@keyframes run {
+	to {
+		background-position-x: calc(var(--size) * 20);
+	}
+}

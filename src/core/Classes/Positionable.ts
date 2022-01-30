@@ -1,6 +1,6 @@
 import { OrientationCode } from "../orientation";
 
-let id = 0
+let id = 1;
 
 export class Positionable {
 	id: number;

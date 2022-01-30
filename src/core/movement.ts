@@ -92,6 +92,7 @@ export const onMovementKey = (key: MovementKeyCode, add: boolean, movementKeys: 
 		if (orientation) {
 			selected.orientation = orientation;
 			selected.moving = true;
+			selected.action = selected.target ? 'defend' : 'run';
 		} else {
 			selected.moving = false;
 		}

@@ -4,20 +4,59 @@ import { Line } from "../core/geometry"
 import { OrientationCode, xMultiplier, yMultiplier } from "../core/orientation"
 
 const defaultCharacter: Partial<Character> = {
+	race: 'human',
+	action: 'iddle',
 	size: 40,
 }
 
 export const allies: Partial<Character>[] = [{
 	...defaultCharacter,
-	top: 400,
-	left: 300,
+	top: 500,
+	left: 100,
+	orientation: OrientationCode.NorthWest,
 },
 {
 	...defaultCharacter,
-	top: 200,
-	left: 700,
+	top: 500,
+	left: 300,
+	orientation: OrientationCode.North,
+},
+{
+	...defaultCharacter,
+	top: 500,
+	left: 500,
+	orientation: OrientationCode.NorthEast,
+},
+{
+	...defaultCharacter,
+	top: 700,
+	left: 100,
+	orientation: OrientationCode.West,
+},
+{
+	...defaultCharacter,
+	top: 700,
+	left: 500,
+	orientation: OrientationCode.East,
+},
+{
+	...defaultCharacter,
+	top: 900,
+	left: 100,
+	orientation: OrientationCode.SouthWest,
+},
+{
+	...defaultCharacter,
+	top: 900,
+	left: 300,
+	orientation: OrientationCode.South,
+},
+{
+	...defaultCharacter,
+	top: 900,
+	left: 500,
 	orientation: OrientationCode.SouthEast,
-}
+},
 ]
 
 export const selected = 0;

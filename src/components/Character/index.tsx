@@ -1,4 +1,5 @@
-import './style.css';
+import './style.scss';
+import './human.scss';
 import { orientationToClass } from '../../core/orientation';
 import { Character } from '../../core/Classes/Character';
 
@@ -8,13 +9,13 @@ type Props = {
 	select: () => void,
 }
 
-export default function RxCharacter({ orientation, moving, team, select }: Character & Props) {
+export default function RxCharacter({ race, orientation, action, team, select }: Character & Props) {
 	return <div
 		className={[
-			'character',
+			race,
 			team,
 			orientationToClass(orientation),
-			moving ? 'move' : 'iddle',
+			action,
 		].join(' ')}
 		onClick={select}
 	></div>
