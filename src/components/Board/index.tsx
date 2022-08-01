@@ -36,9 +36,9 @@ const fillMap = <T extends Positionable>(partials: Partial<T>[], constructor: (p
 }, new Map<T['id'], T>())
 const arrLength = 100;
 const debounceFactor = 10;
-const actions = ['run', 'walk', 'attack', 'defend']
-while (actions.length < 25) {
-	actions.push(`action${actions.length - 3}`)
+const actions:string[] = []
+while (actions.length < 29) {
+	actions.push(`action${actions.length + 1}`)
 }
 export default function RxBoard({ startRunning, size, allies, enemies, obstacles, selected }: Props) {
 	const [time, setTime] = useState(0);

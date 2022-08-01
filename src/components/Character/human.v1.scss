@@ -1,0 +1,160 @@
+@use "sass:math";
+
+@mixin animate($name, $duration, $repeat, $steps, $size, $x, $y, $orientation) {
+	&.#{$orientation} {
+		animation: #{$name}-#{$orientation} #{$duration}s steps(#{$steps}) #{$repeat};
+		background-position-x: #{$size * ($steps + $x)}px;
+		background-position-y: #{$size * $y}px;
+	}
+	@keyframes #{$name}-#{$orientation} {
+		@content;
+		100% {
+			background-position-x: #{$size * $x}px;
+			background-position-y: #{$size * $y}px;
+		}
+	}
+}
+.human {
+	$gender: "Female";
+	$profession: "Necromancer";
+	$sprite: 1;
+	$size: 160;
+	$cols: 24;
+	$rows: 25;
+	width: #{$size}px;
+	height: #{$size}px;
+	bottom: 0px;
+	left: 0px;
+	background-size: #{$size * $cols}px #{$size * $rows}px;
+	background-image: 
+	// url("humans/#{$gender}_WitchHunter/WitchHunter_Hat/Sprite_#{$sprite}.png"),
+		url("humans/#{$gender}_Rogue/Rogue_DaggerMain/Sprite_#{$sprite}.png"),
+		url("humans/#{$gender}_#{$profession}/#{$profession}_Hair/Sprite_#{$sprite}.png"),
+		// url("humans/#{$gender}_#{$profession}/#{$profession}_Top/Sprite_#{$sprite}.png"),
+		// url("humans/#{$gender}_#{$profession}/#{$profession}_Bottom/Sprite_#{$sprite}.png"),
+		url("humans/#{$gender}_#{$profession}/#{$profession}_Base/Sprite_#{$sprite}.png");
+
+	// &.walk {
+	// 	$name: walk;
+	// 	$duration: 1;
+	// 	$repeat: infinite;
+	// 	$steps: 8;
+	// 	@mixin fill-animate($x, $y, $orientation) {
+	// 		@include animate($name, $duration, $repeat, $steps, $size, $x, $y, $orientation);
+	// 	}
+	// 	@include fill-animate(16, 25, south);
+	// 	@include fill-animate(8, 25, west);
+	// 	@include fill-animate(24, 25, east);
+	// 	@include fill-animate(16, 24, north);
+	// 	@include fill-animate(8, 24, south-west);
+	// 	@include fill-animate(24, 24, north-west);
+	// 	@include fill-animate(16, 23, south-east);
+	// 	@include fill-animate(8, 23, north-east);
+	// }
+	// &.run {
+	// 	$name: run;
+	// 	$duration: 0.6;
+	// 	$repeat: infinite;
+	// 	$steps: 8;
+	// 	@mixin fill-animate($x, $y, $orientation) {
+	// 		@include animate($name, $duration, $repeat, $steps, $size, $x, $y, $orientation);
+	// 	}
+	// 	@include fill-animate(24, 23, south);
+	// 	@include fill-animate(16, 22, west);
+	// 	@include fill-animate(8, 22, east);
+	// 	@include fill-animate(24, 22, north);
+	// 	@include fill-animate(16, 21, south-west);
+	// 	@include fill-animate(8, 21, north-west);
+	// 	@include fill-animate(24, 21, south-east);
+	// 	@include fill-animate(16, 20, north-east);
+	// }
+	// @mixin action($name, $duration, $repeat, $steps, $size, $startX, $startY) {
+	// 	$step: 0;
+	// 	@while $step < $steps {
+
+	// 	}
+	// 	$keyFrames:
+	// }
+
+	@mixin action($steps, $startX, $startY) {
+		$x: $cols - $startX;
+		$y: $rows - $startY;
+		&.east {
+			animation: east-iddle 0.7s steps(1) infinite;
+			background-position-x: #{$size * $x}px;
+			background-position-y: #{$size * $y}px;
+		}
+		$percentage: math.div(100, $steps);
+		content: "percentage: #{$percentage}";
+		@keyframes east-iddle {
+			@for $step from 1 through $steps - 1 {
+				@if $x - $step <= 0 {
+					$x: $cols + $x;
+					$y: $y - 1;
+				}
+				#{$percentage * $step * 1%} {
+					background-position-x: #{$size * ($x - $step)}px;
+					background-position-y: #{$size * $y}px;
+				}
+			}
+		}
+	}
+	@mixin action2($name, $duration, $repeat, $steps, $size, $startX, $startY) {
+		&.#{$name} {
+			@include animate($name, $duration, $repeat, $steps, $size, $startX, $startY, south);
+			@include animate($name, $duration, $repeat, $steps, $size, $startX + $steps, $startY, west);
+			@include animate($name, $duration, $repeat, $steps, $size, $startX + $steps * 2, $startY, east);
+			@include animate($name, $duration, $repeat, $steps, $size, $startX + $steps * 3, $startY, north);
+			@include animate($name, $duration, $repeat, $steps, $size, $startX + $steps * 4, $startY, south-west);
+			@include animate($name, $duration, $repeat, $steps, $size, $startX + $steps * 5, $startY, north-west);
+			@include animate($name, $duration, $repeat, $steps, $size, $startX + $steps * 6, $startY, south-east);
+			@include animate($name, $duration, $repeat, $steps, $size, $startX + $steps * 7, $startY, north-east);
+		}
+	}
+	// &.iddle {
+	// 	@include action(3, 23, 15);
+	// }
+
+	// @mixin action3($name, $n) {
+	// 	&.#{$name} {
+	// 		$duration: 0.7;
+	// 		$repeat: 1;
+	// 		$steps: 3;
+	// 		@include animate($name, $duration, $repeat, $steps, $size, 13, #{20 - $n}, south);
+	// 		@include animate($name, $duration, $repeat, $steps, $size, 10, #{20 - $n}, west);
+	// 		@include animate($name, $duration, $repeat, $steps, $size, 7, #{20 - $n}, east);
+	// 		@include animate($name, $duration, $repeat, $steps, $size, 4, #{20 - $n}, north);
+	// 		@include animate($name, $duration, $repeat, $steps, $size, 1, #{20 - $n}, south-west);
+	// 		@include animate($name, $duration, $repeat, 1, $size, 24, #{20 - $n}, north-west) {
+	// 			33% {
+	// 				background-position-x: calc(#{$size} * 24);
+	// 				background-position-y: calc(#{$size} * #{19 - $n});
+	// 			}
+	// 			66% {
+	// 				background-position-x: calc(#{$size} * 23);
+	// 				background-position-y: calc(#{$size} * #{19 - $n});
+	// 			}
+	// 		}
+	// 		@include animate($name, $duration, $repeat, $steps, $size, 19, #{19 - $n}, south-east);
+	// 		@include animate($name, $duration, $repeat, $steps, $size, 16, #{19 - $n}, north-east);
+	// 	}
+	// }
+	// @include action3(action1, 1); // iddle
+	// @include action3(action2, 2); // iddle
+	// @include action3(action3, 3); // iddle
+	// @include action3(action4, 4); // iddle
+	// @include action3(action5, 5); // iddle
+	// @include action3(action6, 6); // kneel
+	// @include action3(action7, 7); // manipulate
+	// @include action3(action8, 8); // sleep
+	// @include action3(action9, 9); // sitting
+	// @include action3(action10, 10); // throw
+	// @include action3(action11, 11); // speak
+	// @include action3(action12, 12); // read
+	// @include action3(action13, 13); // push
+	// @include action3(action14, 14); // deffend
+	// @include action3(action15, 15); // deffend
+	// @include action3(action16, 16); // dodge
+	// @include action3(action17, 17); // hited
+	// @include action3(action18, 18); // reload???
+}

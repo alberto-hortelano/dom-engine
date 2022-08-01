@@ -1,0 +1,107 @@
+@use "sass:math";
+
+$genders: "female", "male";
+$orientations: "south", "west", "east", "north", "south-west", "north-west", "south-east", "north-east";
+$cols: 24;
+$rows: 25;
+$size: 160;
+
+@mixin action($name, $duration, $repeat, $steps, $startX, $startY, $orientation) {
+	$x: $cols - $startX;
+	$y: $rows - $startY;
+	@if $x - $size <= 0 {
+		$x: $cols + $x;
+		$y: $y - 1;
+	}
+
+	&.#{$orientation} {
+		animation: #{$name}-#{$orientation} #{$duration}s steps(1) $repeat;
+		background-position-x: #{$size * $x}px;
+		background-position-y: #{$size * $y}px;
+	}
+	$percentage: math.div(100, $steps);
+	@keyframes #{$name}-#{$orientation} {
+		@for $step from 1 through $steps - 1 {
+			@if $x - $step <= 0 {
+				$x: $cols + $x;
+				$y: $y - 1;
+			}
+			#{$percentage * $step * 1%} {
+				background-position-x: #{$size * ($x - $step)}px;
+				background-position-y: #{$size * $y}px;
+			}
+		}
+	}
+}
+
+@mixin animation($name, $x, $y) {
+	&.#{$name} {
+		$duration: 1.7;
+		$repeat: infinite;
+		$steps: 8;
+		@include action($name, $duration, $repeat, $steps, $x, $y, south);
+		$x: $x + $steps;
+		@include action($name, $duration, $repeat, $steps, $x, $y, west);
+		$x: $x + $steps;
+		@include action($name, $duration, $repeat, $steps, $x, $y, east);
+		$x: $x + $steps;
+		@include action($name, $duration, $repeat, $steps, $x, $y, north);
+		$x: $x + $steps;
+		@include action($name, $duration, $repeat, $steps, $x, $y, south-west);
+		$x: $x + $steps;
+		@include action($name, $duration, $repeat, $steps, $x, $y, north-west);
+		$x: $x + $steps;
+		@include action($name, $duration, $repeat, $steps, $x, $y, south-east);
+		$x: $x + $steps;
+		@include action($name, $duration, $repeat, $steps, $x, $y, south-east);
+	}
+}
+
+@mixin bg($sprite) {
+	@each $gender in $genders {
+		.#{$gender} {
+			color: red;
+		}
+	}
+}
+
+.human {
+	$gender: "Female";
+	$profession: "Assassin";
+	$sprite: 1;
+	width: #{$size}px;
+	height: #{$size}px;
+	bottom: 0px;
+	left: 0px;
+	background-size: #{$size * $cols}px #{$size * $rows}px;
+	background-image: url("humans/#{$gender}_Footman/Footman_Sword/Sprite_#{$sprite}.png"),
+		url("humans/#{$gender}_#{$profession}/#{$profession}_Hair/Sprite_#{$sprite}.png"),
+		url("humans/#{$gender}_#{$profession}/#{$profession}_Top/Sprite_#{$sprite}.png"),
+		url("humans/#{$gender}_#{$profession}/#{$profession}_Bottom/Sprite_#{$sprite}.png"),
+		url("humans/#{$gender}_#{$profession}/#{$profession}_Base/Sprite_#{$sprite}.png");
+
+	// &.iddle {
+	// 	@each $orientation in $orientations {
+	// 		@include animation(walk, $orientation, 0.7, infinite, 3, 23, 15);
+	// 	}
+	// }
+
+	@include animation(action1, 0, 0); // iddle
+	// @include animation(action2, 2); // iddle
+	// @include animation(action3, 3); // iddle
+	// @include animation(action4, 4); // iddle
+	// @include animation(action5, 5); // iddle
+	// @include animation(action6, 6); // kneel
+	// @include animation(action7, 7); // manipulate
+	// @include animation(action8, 8); // sleep
+	// @include animation(action9, 9); // sitting
+	// @include animation(action10, 10); // throw
+	// @include animation(action11, 11); // speak
+	// @include animation(action12, 12); // read
+	// @include animation(action13, 13); // push
+	// @include animation(action14, 14); // deffend
+	// @include animation(action15, 15); // deffend
+	// @include animation(action16, 16); // dodge
+	// @include animation(action17, 17); // hited
+	// @include animation(action18, 18); // reload???
+}

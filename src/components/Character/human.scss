@@ -1,140 +1,86 @@
-@mixin animate($name, $duration, $repeat, $steps, $size, $x, $y, $orientation) {
-	&.#{$orientation} {
-		animation: #{$name}-#{$orientation} #{$duration}s steps(#{$steps}) #{$repeat};
-		background-position-x: calc(#{$size} * #{$steps + $x});
-		background-position-y: calc(#{$size} * #{$y});
-	}
-	@keyframes #{$name}-#{$orientation} {
-		@content;
-		100% {
-			background-position-x: calc(#{$size} * #{$x});
-			background-position-y: calc(#{$size} * #{$y});
+@use "sass:math";
+$genders: "female", "male";
+$orientations: "south", "west", "east", "north", "south-west", "north-west", "south-east", "north-east";
+$cols: 24;
+$rows: 25;
+$size: 160;
+
+
+@mixin action($name, $frames, $x, $y) {
+	$percentage: math.div(100, $frames);
+	&.#{$name} {
+		@each $orientation in $orientations {
+			&.#{$orientation} {
+				animation: #{$name}-#{$orientation} 1s steps(1) infinite;
+				background-position-x: -#{$size * $x}px;
+				background-position-y: -#{$size * $y}px;
+				@warn $orientation $x $y;
+				@keyframes #{$name}-#{$orientation} {
+					@for $frame from 0 through $frames {
+						// @if $x - $frame <= 0 {
+						// 	$x: $cols + $x;
+						// 	$y: $y + 1;
+						// }
+						#{$percentage * $frame * 1%} {
+							background-position-x: -#{$size * $x}px;
+							content: "#{$x}:#{$y}";
+						}
+						$x: $x + 1;
+					}
+				}
+			}
+			$x: $x - 1;
+			@if $x - $cols <= 0 {
+				$x: $cols - $x;
+				$y: $y + 1;
+			}
 		}
 	}
 }
+
 .human {
 	$gender: "Female";
-	$profession: "Necromancer";
-	$size: 160px;
-	$cols: 24;
-	$rows: 25;
-	width: #{$size};
-	height: #{$size};
+	$profession: "Assassin";
+	$sprite: 1;
+	width: #{$size}px;
+	height: #{$size}px;
 	bottom: 0px;
 	left: 0px;
-	background-size: calc(#{$size} * #{$cols}) calc(#{$size} * #{$rows});
-	background-image: url("humans/#{$gender}_WitchHunter/WitchHunter_Hat/Sprite_1.png"),
-		url("humans/#{$gender}_Rogue/Rogue_DaggerMain/Sprite_1.png"),
-		url("humans/#{$gender}_#{$profession}/#{$profession}_Hair/Sprite_1.png"),
-		url("humans/#{$gender}_#{$profession}/#{$profession}_Top/Sprite_1.png"),
-		url("humans/#{$gender}_#{$profession}/#{$profession}_Bottom/Sprite_1.png"),
-		url("humans/#{$gender}_#{$profession}/#{$profession}_Base/Sprite_1.png");
+	background-size: #{$size * $cols}px #{$size * $rows}px;
+	background-image: url("humans/#{$gender}_#{$profession}/#{$profession}_KamaMain/Sprite_#{$sprite}.png"),
+		url("humans/#{$gender}_#{$profession}/#{$profession}_Hair/Sprite_#{$sprite}.png"),
+		url("humans/#{$gender}_#{$profession}/#{$profession}_Top/Sprite_#{$sprite}.png"),
+		url("humans/#{$gender}_#{$profession}/#{$profession}_Bottom/Sprite_#{$sprite}.png"),
+		url("humans/#{$gender}_#{$profession}/#{$profession}_Base/Sprite_#{$sprite}.png");
+	$x: 0;
+	$y: 0;
+	$frames: 8;
+	@include action(action1, $frames, $x, $y); // iddle
 
-	&.walk {
-		$name: walk;
-		$duration: 1;
-		$repeat: infinite;
-		$steps: 8;
-		@mixin fill-animate($x, $y, $orientation) {
-			@include animate($name, $duration, $repeat, $steps, $size, $x, $y, $orientation);
-		}
-		@include fill-animate(16, 25, south);
-		@include fill-animate(8, 25, west);
-		@include fill-animate(24, 25, east);
-		@include fill-animate(16, 24, north);
-		@include fill-animate(8, 24, south-west);
-		@include fill-animate(24, 24, north-west);
-		@include fill-animate(16, 23, south-east);
-		@include fill-animate(8, 23, north-east);
-	}
-	&.run {
-		$name: run;
-		$duration: 0.6;
-		$repeat: infinite;
-		$steps: 8;
-		@mixin fill-animate($x, $y, $orientation) {
-			@include animate($name, $duration, $repeat, $steps, $size, $x, $y, $orientation);
-		}
-		@include fill-animate(24, 23, south);
-		@include fill-animate(16, 22, west);
-		@include fill-animate(8, 22, east);
-		@include fill-animate(24, 22, north);
-		@include fill-animate(16, 21, south-west);
-		@include fill-animate(8, 21, north-west);
-		@include fill-animate(24, 21, south-east);
-		@include fill-animate(16, 20, north-east);
-	}
-	// @mixin action($name, $n) {
-	// 	&.#{$name} {
-	// 		$duration: 0.6;
-	// 		$repeat: infinite;
-	// 		$steps: 8;
-	// 		@mixin fill-animate($x, $y, $orientation) {
-	// 			@include animate($name, $duration, $repeat, $steps, $size, $x, $y, $orientation);
-	// 		}
-	// 		@include fill-animate(24, 23, south);
-	// 		@include fill-animate(16, 22, west);
-	// 		@include fill-animate(8, 22, east);
-	// 		@include fill-animate(24, 22, north);
-	// 		@include fill-animate(16, 21, south-west);
-	// 		@include fill-animate(8, 21, north-west);
-	// 		@include fill-animate(24, 21, south-east);
-	// 		@include fill-animate(16, 20, north-east);
-	// 	}
-	// }
-	@mixin action3($name, $n) {
-		&.#{$name} {
-			$name: #{$name};
-			$duration: 0.7;
-			$repeat: infinite;
-			$steps: 3;
-			@include animate($name, $duration, $repeat, $steps, $size, 13, #{20 - $n}, south);
-			@include animate($name, $duration, $repeat, $steps, $size, 10, #{20 - $n}, west);
-			@include animate($name, $duration, $repeat, $steps, $size, 7, #{20 - $n}, east);
-			@include animate($name, $duration, $repeat, $steps, $size, 4, #{20 - $n}, north);
-			@include animate($name, $duration, $repeat, $steps, $size, 1, #{20 - $n}, south-west);
-			@include animate($name, $duration, $repeat, 1, $size, 22, #{20 - $n}, north-west) {
+
+
+	// CSS Output example:
+	// @include action(example, south, 3); // example
+	&.example {
+		&.south {
+			animation: example-south 3s steps(1) infinite;
+			background-position-x: -#{$size * 8}px;
+			background-position-y: -#{$size * 11}px;
+			@keyframes example-south {
 				0% {
-					background-position-x: calc(#{$size} * 25);
-					background-position-y: calc(#{$size} * #{20 - $n});
+					background-position-x: -#{$size * 8}px;
 				}
-				50% {
-					background-position-x: calc(#{$size} * 24);
-					background-position-y: calc(#{$size} * #{19 - $n});
+				33% {
+					background-position-x: -#{$size * 9}px;
+				}
+				66% {
+					background-position-x: -#{$size * 10}px;
 				}
 				100% {
-					background-position-x: calc(#{$size} * 23);
-					background-position-y: calc(#{$size} * #{19 - $n});
+					background-position-x: -#{$size * 11}px;
 				}
 			}
-			@include animate($name, $duration, $repeat, $steps, $size, 19, #{19 - $n}, south-east);
-			@include animate($name, $duration, $repeat, $steps, $size, 16, #{19 - $n}, north-east);
 		}
 	}
-	@include action3(action1, 1);
-	@include action3(action2, 2);
-	@include action3(action3, 3);
-	@include action3(action4, 4);
-	@include action3(action5, 5);
-	@include action3(action6, 6);
-	@include action3(action7, 7);
-	@include action3(action8, 8);
-	@include action3(action9, 9);
-	@include action3(action10, 10);
-	@include action3(action11, 11);
-	@include action3(action12, 12);
-	@include action3(action13, 13);
-	@include action3(action14, 14);
-	@include action3(action15, 15);
-	@include action3(action16, 16);
-	@include action3(action17, 17);
-	@include action3(action18, 18);
-	&.attack {
-		background-position-x: calc(#{$size} * 20);
-		animation: attack 2s steps(4) infinite;
-	}
-	&.defend {
-		background-position-x: calc(#{$size} * 29);
-		animation: defend 2s steps(1) infinite;
-	}
+
 }

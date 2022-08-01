@@ -20,12 +20,12 @@ const fastHypo = (a: number, b: number) => {
 	}
 	return Math.max(b, 0.918 * (b + (a >> 1)));
 }
-const fastSqrt = (x: number) => {
-	// Round sqrt table 
-	// sqrt(x) = sqrt(exacta + resto)
-	// y = sqrt(exacta)
-	// sqrt(x) = y + resto / (2 * y + 1)
-}
+// const fastSqrt = (x: number) => {
+// Round sqrt table 
+// sqrt(x) = sqrt(exacta + resto)
+// y = sqrt(exacta)
+// sqrt(x) = y + resto / (2 * y + 1)
+// }
 /**
  * Area between line height and r to p lenght and the 
  * area between line width and r to p height

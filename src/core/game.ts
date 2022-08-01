@@ -1,7 +1,7 @@
-import { Character } from "../core/Classes/Character"
-import { Itinerant } from "../core/Classes/Itinerant"
-import { Obstacle } from "../core/Classes/Obstacle"
-import { MovementKey } from "../core/movement"
+import { Character } from "./Classes/Character"
+import { Itinerant } from "./Classes/Itinerant"
+import { Obstacle } from "./Classes/Obstacle"
+import { MovementKey } from "./movement"
 
 export type Obstacles = Map<Obstacle['id'], Obstacle>;
 export type Itinerants = Map<Itinerant['id'], Itinerant>;
