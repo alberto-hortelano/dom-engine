@@ -1,29 +1,37 @@
 import { Character } from '../core/Classes/Character';
 import { Game, getSelected } from '../core/game';
 import { MovementKeyEvent } from '../core/keyboard';
-import { moveCharacters, scrollToSelected, onMovementKey } from '../core/movement';
+import { moveCharacters, onMovementKey, scrollToSelected } from '../core/movement';
 
-export type Action = {
-	type: 'animationFrame',
-	time: number,
-	newTime: number,
-} | {
-	type: 'move',
-	keyEvent: MovementKeyEvent,
-} | {
-	type: 'select',
-	selected: Character['id'],
-} | {
-	type: 'selectTarget',
-	target: Character['id'],
-} | {
-	type: 'blur',
-} | {
-	type: 'switch',
-} | {
-	type: 'debug', // DEBUGGING
-	game: Partial<Game>,
-}
+export type Action =
+	| {
+			type: 'animationFrame';
+			time: number;
+			newTime: number;
+	  }
+	| {
+			type: 'move';
+			keyEvent: MovementKeyEvent;
+	  }
+	| {
+			type: 'select';
+			selected: Character['id'];
+	  }
+	| {
+			type: 'selectTarget';
+			target: Character['id'];
+	  }
+	| {
+			type: 'blur';
+	  }
+	| {
+			type: 'switch';
+	  }
+	| {
+			type: 'debug'; // DEBUGGING
+			game: Partial<Game>;
+	  };
+// eslint-disable-next-line max-lines-per-function
 export const reducer = (game: Game, action: Action): Game => {
 	const selected = getSelected(game);
 	switch (action.type) {
@@ -63,7 +71,12 @@ export const reducer = (game: Game, action: Action): Game => {
 				movementKeys: [],
 			};
 		case 'move':
-			game.movementKeys = onMovementKey(action.keyEvent.code, action.keyEvent.type === 'keydown', game.movementKeys, selected);
+			game.movementKeys = onMovementKey(
+				action.keyEvent.code,
+				action.keyEvent.type === 'keydown',
+				game.movementKeys,
+				selected,
+			);
 			return {
 				...game,
 			};
@@ -76,4 +89,4 @@ export const reducer = (game: Game, action: Action): Game => {
 			console.error('WRONG ACTION', action);
 			return game;
 	}
-}
+};

@@ -1,7 +1,7 @@
-import { Character } from "./Classes/Character";
-import { Obstacle, isLineShaped, getAbsoluteLinePosition } from "./Classes/Obstacle";
-import { Obstacles, Characters } from "./game";
-import { twoPointsDist, Line, pointLineCollision } from "./geometry";
+import { Character } from './Classes/Character';
+import { getAbsoluteLinePosition, isLineShaped, Obstacle } from './Classes/Obstacle';
+import { Characters, Obstacles } from './game';
+import { Line, pointLineCollision, twoPointsDist } from './geometry';
 
 export const collision = (character: Character, positionable: Character | Obstacle) => {
 	const dist = twoPointsDist(character, positionable);
@@ -16,7 +16,7 @@ export const collision = (character: Character, positionable: Character | Obstac
 	} else {
 		return false;
 	}
-}
+};
 export const characterObstacleCollision = (character: Character, obstacle: Obstacle & { shape: Line }) => {
 	const absoluteLine = getAbsoluteLinePosition(obstacle);
 	const startDist = twoPointsDist(character, absoluteLine.start);
@@ -28,15 +28,17 @@ export const characterObstacleCollision = (character: Character, obstacle: Obsta
 		return true;
 	}
 	return pointLineCollision(startDist, endDist, absoluteLine, character.size);
-}
+};
 export const checkCollisions = (character: Character, obstacles: Obstacles, characters: Characters) => {
-	const collideObstacle = [...obstacles.values()].find(obstacle => collision(character, obstacle)) || false;
+	const collideObstacle = [...obstacles.values()].find((obstacle) => collision(character, obstacle)) || false;
 	if (collideObstacle) {
 		return collideObstacle;
 	}
-	const collideCharacter = [...characters.values()].find(otherCharacter => character.id !== otherCharacter.id && collision(character, otherCharacter));
+	const collideCharacter = [...characters.values()].find(
+		(otherCharacter) => character.id !== otherCharacter.id && collision(character, otherCharacter),
+	);
 	if (collideCharacter) {
 		return collideCharacter;
 	}
 	return false;
-}
+};

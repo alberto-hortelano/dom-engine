@@ -1,6 +1,6 @@
-import { Character } from "../core/Classes/Character";
-import { Game } from "../core/game";
-import { reducer } from "./reducer";
+import { Character } from '../core/Classes/Character';
+import { Game } from '../core/game';
+import { reducer } from './reducer';
 
 describe('reducer', () => {
 	test('switch', () => {
@@ -13,7 +13,7 @@ describe('reducer', () => {
 
 		const newState = reducer(initialState, {
 			type: 'switch',
-		})
+		});
 		expect(newState).toEqual(expectedState);
 	});
 	// describe.only('keyPressed', () => {

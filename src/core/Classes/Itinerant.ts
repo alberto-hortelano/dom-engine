@@ -1,4 +1,4 @@
-import { Positionable } from "./Positionable";
+import { Positionable } from './Positionable';
 
 export class Itinerant extends Positionable {
 	speed: number;

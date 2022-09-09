@@ -1,25 +1,32 @@
+/* eslint-disable max-lines-per-function */
 import { Position, sameSide, __testing } from './geometry';
 
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const { fastHypo } = __testing!;
 
 describe('sameSide', () => {
 	// line r ---- s
 	const r: Position = {
-		left: 0, top: 3
-	}
+		left: 0,
+		top: 3,
+	};
 	const s: Position = {
-		left: 1, top: 0
-	}
+		left: 1,
+		top: 0,
+	};
 	const p: Position = {
-		left: 2, top: 2
-	}
+		left: 2,
+		top: 2,
+	};
 	const sameSidePoint: Position = {
-		left: 1, top: 1
-	}
+		left: 1,
+		top: 1,
+	};
 	const otherSidePoint: Position = {
-		left: 0, top: 2
-	}
-	const testIt = (testPoint: Position) => sameSide(testPoint, p, r, s)
+		left: 0,
+		top: 2,
+	};
+	const testIt = (testPoint: Position) => sameSide(testPoint, p, r, s);
 	test('two points are at the same side of a line', () => {
 		const sameSideResult = testIt(sameSidePoint);
 		expect(sameSideResult).toBeTruthy();
@@ -37,13 +44,13 @@ describe('fastHypot', () => {
 				a = b;
 				b = c;
 			}
-			return 100 - 100 * a / b;
-		}
+			return 100 - (100 * a) / b;
+		};
 		const a = 600;
 		const b = 400;
 		const fast = fastHypo(a, b);
 		const hypot = Math.hypot(a, b);
 		const diff = percentage(fast, hypot);
-		console.log("test -> hype", hypot, fast, diff);
+		console.log('test -> hype', hypot, fast, diff);
 	});
 });

@@ -9,55 +9,150 @@ $size: 160;
 @mixin action($name, $frames, $x, $y) {
 	$percentage: math.div(100, $frames);
 	&.#{$name} {
+		@content;
 		@each $orientation in $orientations {
+			$initialPosition: -#{$size * $x}px;
 			&.#{$orientation} {
 				animation: #{$name}-#{$orientation} 1s steps(1) infinite;
-				background-position-x: -#{$size * $x}px;
+				background-position-x: $initialPosition;
 				background-position-y: -#{$size * $y}px;
 				@warn $orientation $x $y;
 				@keyframes #{$name}-#{$orientation} {
-					@for $frame from 0 through $frames {
-						// @if $x - $frame <= 0 {
-						// 	$x: $cols + $x;
-						// 	$y: $y + 1;
-						// }
+					@for $frame from 0 through $frames - 1 {
 						#{$percentage * $frame * 1%} {
 							background-position-x: -#{$size * $x}px;
+							background-position-y: -#{$size * $y}px;
 							content: "#{$x}:#{$y}";
 						}
 						$x: $x + 1;
+						@if $cols - $x <= 0 {
+							$x: 0;
+							$y: $y + 1;
+						}
+					}
+					100% {
+						background-position-x: $initialPosition;
+						content: "#{$x}:#{$y}";
 					}
 				}
-			}
-			$x: $x - 1;
-			@if $x - $cols <= 0 {
-				$x: $cols - $x;
-				$y: $y + 1;
 			}
 		}
 	}
 }
 
-.human {
-	$gender: "Female";
-	$profession: "Assassin";
-	$sprite: 1;
-	width: #{$size}px;
-	height: #{$size}px;
-	bottom: 0px;
-	left: 0px;
-	background-size: #{$size * $cols}px #{$size * $rows}px;
+@mixin bg-img($gender, $profession, $sprite) {
 	background-image: url("humans/#{$gender}_#{$profession}/#{$profession}_KamaMain/Sprite_#{$sprite}.png"),
 		url("humans/#{$gender}_#{$profession}/#{$profession}_Hair/Sprite_#{$sprite}.png"),
 		url("humans/#{$gender}_#{$profession}/#{$profession}_Top/Sprite_#{$sprite}.png"),
 		url("humans/#{$gender}_#{$profession}/#{$profession}_Bottom/Sprite_#{$sprite}.png"),
 		url("humans/#{$gender}_#{$profession}/#{$profession}_Base/Sprite_#{$sprite}.png");
-	$x: 0;
-	$y: 0;
-	$frames: 8;
-	@include action(action1, $frames, $x, $y); // iddle
+}
 
+.human {
+	$gender: "Female";
+	$profession: "Assassin";
+	width: #{$size}px;
+	height: #{$size}px;
+	bottom: 0px;
+	left: 0px;
+	background-size: #{$size * $cols}px #{$size * $rows}px;
 
+	// Sprite 1
+	@mixin bg-img-1() {
+		@include bg-img($gender, $profession, 1)
+	}
+	@include action(action1, 8, 0, 0){@include  bg-img-1()}; // walk
+	@include action(action2, 8, 16, 2){@include  bg-img-1()}; // run
+	@for $i from 3 through 21 {
+		@include action("action#{$i}", 3, 8, $i + 2){@include  bg-img-1()};
+	}
+	// 3 - stand1
+	// 4 - stand2
+	// 5 - stand3
+	// 6 - stand4
+	// 7 - stand5
+	// 8 - stand6
+	// 9 - bend
+	// 10 - manipulate
+	// 11 - lie down
+	// 12 - sit on chair
+	// 13 - throw javelin
+	// 14 - stand-talk
+	// 15 - read-talk
+	// 16 - push-throw
+	// 17 - defend??
+	// 18 - manipulate-reload
+	// 19 - dodge-side
+	// 20 - dodge-back
+	// 21 - manipulate-reload2
+
+	// Sprite 2
+	@mixin bg-img-2() {
+		@include bg-img($gender, $profession, 2)
+	}
+	@include action("action22", 3, 0, 0){@include  bg-img-2()}; // 22 - punch
+	@include action("action23", 3, 0, 1){@include  bg-img-2()}; // 23 - kick
+	// one img dead animations...
+	// ..
+	// ..
+	@for $i from 4 through $rows {
+		@include action("action#{$i + 20}", 3, 0, $i){@include  bg-img-2()};
+	}
+	
+	// 24 - stand-combat1
+	// 25 - look down
+	// 26 - stand-combat2
+	// 27 - attack-up-down
+	// 28 - attack-left-right
+	// 29 - attack-stab
+	// 30 - stand-combat3
+	// 31 - stand-combat4
+	// 32 - stand-combat-spear
+	// 33 - stand7
+	// 34 - attack-up-down2
+	// 35 - attack-stab-spear
+	// 36 - stand-combat5
+	// 37 - war cry
+	// 38 - stand-gun
+	// 39 - stand-gun2
+	// 40 - fire-arrow
+	// 41 - fire-gun
+	// 42 - stand8
+	// 43 - stand9
+	// 44 - aim-gun
+	// 45 - throw-stab
+
+	// Sprite 3
+	@mixin bg-img-3() {
+		@include bg-img($gender, $profession, 3)
+	}
+	@for $i from 0 through $rows {
+		@include action("action#{$i + 46}", 3, 0, $i){@include  bg-img-3()};
+	}
+	// 46 - fire-gun2
+	// 47 - aim-gun2
+	// 48 - stand-gun3
+	// 49 - stand-gun4
+	// 50 - stand-gun5
+	// 51 - stand10
+	// 52 - fire-shotgun
+	// 53 - 
+	// 54 - 
+	// 55 - 
+	// 56 - 
+	// 57 - 
+	// 58 - 
+	// 59 - 
+	// 60 - 
+	// 61 - 
+	// 62 - 
+	// 63 - 
+	// 64 - 
+	// 65 - 
+	// 66 - 
+	// 67 - 
+	// 68 - 
+	// 69 - 
 
 	// CSS Output example:
 	// @include action(example, south, 3); // example

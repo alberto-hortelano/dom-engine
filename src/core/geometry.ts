@@ -1,33 +1,33 @@
-export type Position = { top: number, left: number };
+export type Position = { top: number; left: number };
 export type Shape = Line | Rectangle | number;
 export class Line {
 	width: number;
 	constructor(readonly start: Position, readonly end: Position) {
 		this.width = twoPointsDist(this.start, this.end);
 	}
-};
+}
 export interface Rectangle extends Line {
-	height: number,
-};
+	height: number;
+}
 
 const roundPosition = (p: Position) => ({
 	left: Math.round(p.left),
 	top: Math.round(p.top),
-})
+});
 const fastHypo = (a: number, b: number) => {
 	if (a > b) {
 		[a, b] = [b, a];
 	}
 	return Math.max(b, 0.918 * (b + (a >> 1)));
-}
+};
 // const fastSqrt = (x: number) => {
-// Round sqrt table 
+// Round sqrt table
 // sqrt(x) = sqrt(exacta + resto)
 // y = sqrt(exacta)
 // sqrt(x) = y + resto / (2 * y + 1)
 // }
 /**
- * Area between line height and r to p lenght and the 
+ * Area between line height and r to p lenght and the
  * area between line width and r to p height
  */
 const areas = (p: Position, diff: Position, r: Position) => diff.top * (p.left - r.left) + diff.left * (p.top - r.top);
@@ -42,30 +42,28 @@ export const sameSide = (a: Position, b: Position, r: Position, s: Position) => 
 	s = roundPosition(s);
 	const rsDiff = {
 		left: s.left - r.left,
-		top: r.top - s.top
+		top: r.top - s.top,
 	};
 	const aArea = areas(a, rsDiff, r);
 	const bArea = areas(b, rsDiff, r);
-	return aArea > 0 && bArea > 0 || aArea < 0 && bArea < 0;
-}
+	return (aArea > 0 && bArea > 0) || (aArea < 0 && bArea < 0);
+};
 export const addTwoPoints = (a: Position, b: Position) => ({
 	top: a.top + b.top,
 	left: a.left + b.left,
-})
+});
 export const twoPointsDist = (a: Position, b: Position) => {
 	const x = Math.abs(a.left - b.left);
 	const y = Math.abs(a.top - b.top);
 	return fastHypo(x, y);
-}
+};
 export const triangleHeight = (base: number, sideA: number, sideB: number) => {
 	const semiPerimeter = (base + sideA + sideB) / 2;
-	return Math.sqrt(
-		semiPerimeter *
-		(semiPerimeter - base) *
-		(semiPerimeter - sideA) *
-		(semiPerimeter - sideB)
-	) * 2 / base;
-}
+	return (
+		(Math.sqrt(semiPerimeter * (semiPerimeter - base) * (semiPerimeter - sideA) * (semiPerimeter - sideB)) * 2) /
+		base
+	);
+};
 // Prints lines and points for debugging collisions
 const printCollision = (start: Position, end: Position, collide: boolean) => {
 	const startMark = document.getElementById('start')!;
@@ -82,7 +80,7 @@ const printCollision = (start: Position, end: Position, collide: boolean) => {
 	} else {
 		line.style.background = '#ccc';
 	}
-}
+};
 export const pointLineCollision = (startDist: number, endDist: number, line: Line, minDist: number) => {
 	const { start, end, width } = line;
 	const sides = [width, startDist, endDist].sort();
@@ -96,7 +94,10 @@ export const pointLineCollision = (startDist: number, endDist: number, line: Lin
 	const collide = 2 * dist < minDist;
 	printCollision(start, end, collide);
 	return collide;
-}
-export const __testing = (process.env.NODE_ENV === 'test') ? {
-	fastHypo
-} : void 0;
+};
+export const __testing =
+	process.env.NODE_ENV === 'test'
+		? {
+				fastHypo,
+		  }
+		: void 0;

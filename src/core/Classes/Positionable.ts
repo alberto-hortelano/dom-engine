@@ -1,4 +1,4 @@
-import { OrientationCode } from "../orientation";
+import { OrientationCode } from '../orientation';
 
 let id = 1;
 

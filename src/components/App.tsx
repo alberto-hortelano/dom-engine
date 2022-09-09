@@ -1,4 +1,3 @@
-
 import './App.css';
 import RxBoard from './Board';
 import { allies, selected, enemies, obstacles } from '../state/game';

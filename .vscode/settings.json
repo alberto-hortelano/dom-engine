@@ -1,0 +1,18 @@
+{
+	"editor.formatOnSave": true,
+	"editor.formatOnPaste": false,
+	"javascript.format.enable": true,
+	"typescript.format.enable": true,
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"[typescript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"js/ts.implicitProjectConfig.experimentalDecorators": false,
+	"javascript.preferences.importModuleSpecifier": "relative",
+	"typescript.preferences.importModuleSpecifier": "relative",
+	"javascript.preferences.quoteStyle": "single",
+	"typescript.preferences.quoteStyle": "single",
+	"editor.codeActionsOnSave": {
+		"source.organizeImports": true
+	}
+}

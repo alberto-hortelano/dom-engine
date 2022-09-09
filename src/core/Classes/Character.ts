@@ -1,4 +1,4 @@
-import { Itinerant } from "./Itinerant";
+import { Itinerant } from './Itinerant';
 
 export class Character extends Itinerant {
 	race: string;

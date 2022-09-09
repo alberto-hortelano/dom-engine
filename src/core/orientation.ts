@@ -1,13 +1,27 @@
-
 // Isometric proyection 27 deg
 export const xMultiplier = 0.454;
 export const yMultiplier = 0.891;
 export const negXMultiplier = -0.454;
 export const negYMultiplier = -0.891;
 
-export type Factor = 1 | -1 | 0 | typeof xMultiplier | typeof negXMultiplier | typeof yMultiplier | typeof negYMultiplier;
-export type OrientationClass = 'north' | 'north-east' | 'east' | 'south-east' | 'south' | 'south-west' | 'west' | 'north-west';
-type OrientationValues = { factors: [Factor, Factor], className: OrientationClass }
+export type Factor =
+	| 1
+	| -1
+	| 0
+	| typeof xMultiplier
+	| typeof negXMultiplier
+	| typeof yMultiplier
+	| typeof negYMultiplier;
+export type OrientationClass =
+	| 'north'
+	| 'north-east'
+	| 'east'
+	| 'south-east'
+	| 'south'
+	| 'south-west'
+	| 'west'
+	| 'north-west';
+type OrientationValues = { factors: [Factor, Factor]; className: OrientationClass };
 
 // Addition of the two letters keycode (wasd)
 export enum OrientationCode {
@@ -45,6 +59,8 @@ export const orientationToClass = (sum: number) => orientations.get(sum)?.classN
 export const orientationToFactors = (sum: number) => orientations.get(sum)?.factors || [0, 0];
 const stepMultiplier = [0, 1, -1, 2, -2, 3, -3, 4, -4];
 export const getNextOrientation = function (orientation: OrientationCode, step: number) {
-	const index = (orientationCodes.length + orientationCodes.indexOf(orientation) + stepMultiplier[step]) % orientationCodes.length;
-	return orientationCodes[index]
-}
+	const index =
+		(orientationCodes.length + orientationCodes.indexOf(orientation) + stepMultiplier[step]) %
+		orientationCodes.length;
+	return orientationCodes[index];
+};

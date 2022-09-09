@@ -2,9 +2,7 @@ import { Factor, OrientationCode, orientationToFactors, xMultiplier, yMultiplier
 import { __testing, MovementKey, onMovementKey, KeyCodes, scrollToSelected, moveCharacters } from './movement';
 import { Character } from './Classes/Character';
 
-const {
-	changeMovementKeys, addLastMovementKeys, moveCharacter,
-} = __testing!;
+const { changeMovementKeys, addLastMovementKeys, moveCharacter } = __testing!;
 
 /**
  * KeyCodes:
@@ -24,26 +22,26 @@ const {
 describe('movement', () => {
 	describe('changeDirection', () => {
 		test('adds movement', () => {
-			const movement: MovementKey[] = [65, 68, 83]
-			const expected: MovementKey[] = [65, 68, 83, 87]
-			const result = changeMovementKeys('KeyW', true, movement)
+			const movement: MovementKey[] = [65, 68, 83];
+			const expected: MovementKey[] = [65, 68, 83, 87];
+			const result = changeMovementKeys('KeyW', true, movement);
 			expect(result).toStrictEqual(expected);
 		});
 		test('replaces movement', () => {
-			const movement: MovementKey[] = [65, 68, 83]
-			const expected: MovementKey[] = [68, 83, 65]
+			const movement: MovementKey[] = [65, 68, 83];
+			const expected: MovementKey[] = [68, 83, 65];
 			const result = changeMovementKeys('KeyA', true, movement);
 			expect(result).toStrictEqual(expected);
 		});
 		test('removes movement', () => {
-			const movement: MovementKey[] = [65, 68, 83]
-			const expected: MovementKey[] = [68, 83]
+			const movement: MovementKey[] = [65, 68, 83];
+			const expected: MovementKey[] = [68, 83];
 			const result = changeMovementKeys('KeyA', false, movement);
 			expect(result).toStrictEqual(expected);
 		});
 		test('complex', () => {
 			let movement: MovementKey[] = [87];
-			const expected: MovementKey[] = [87, 65]
+			const expected: MovementKey[] = [87, 65];
 			movement = changeMovementKeys('KeyA', true, movement);
 			movement = changeMovementKeys('KeyA', false, movement);
 			movement = changeMovementKeys('KeyA', true, movement);
@@ -53,13 +51,13 @@ describe('movement', () => {
 	describe('movementKeysToOrientation', () => {
 		test('North', () => {
 			const movementKeys: MovementKey[] = [87]; // w
-			const expected: [Factor, Factor] = [-1, 0]
+			const expected: [Factor, Factor] = [-1, 0];
 			const result = orientationToFactors(addLastMovementKeys(movementKeys));
 			expect(result).toStrictEqual(expected);
 		});
 		test('movementKeysToOrientation', () => {
 			const movementKeys: MovementKey[] = [87, 65, 83, 68]; // wasd
-			const expected: [Factor, Factor] = [xMultiplier, yMultiplier]
+			const expected: [Factor, Factor] = [xMultiplier, yMultiplier];
 			const result = orientationToFactors(addLastMovementKeys(movementKeys));
 			expect(result).toStrictEqual(expected);
 		});
@@ -102,14 +100,14 @@ describe('movement', () => {
 			const top = 50;
 			const left = 100;
 			const character = new Character({ top, left });
-			scrollToSelected(character)
+			scrollToSelected(character);
 			expect(scrollToSpy).toHaveBeenCalledWith(50, 0);
 		});
 		test('smooth', () => {
 			const top = 50;
 			const left = 100;
 			const character = new Character({ top, left });
-			scrollToSelected(character, true)
+			scrollToSelected(character, true);
 			expect(scrollToSpy).toHaveBeenCalledWith({ left: 50, top: 0, behavior: 'smooth' });
 		});
 	});
@@ -121,11 +119,10 @@ describe('movement', () => {
 				top: 300,
 				left: 400,
 			});
-			console.log("test -> character", character);
+			console.log('test -> character', character);
 			const movedCharacter = moveCharacter(character, elapsedTime);
-			console.log("test -> movedCharacter", movedCharacter);
+			console.log('test -> movedCharacter', movedCharacter);
 			expect(moveCharacter).toBeTruthy();
 		});
 	});
 });
-

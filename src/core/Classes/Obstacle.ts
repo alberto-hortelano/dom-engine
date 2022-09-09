@@ -1,5 +1,5 @@
-import { Line, Shape } from "../geometry";
-import { Positionable } from "./Positionable";
+import { Line, Shape } from '../geometry';
+import { Positionable } from './Positionable';
 
 export class Obstacle extends Positionable {
 	className: string;
@@ -21,4 +21,5 @@ export const getAbsoluteLinePosition = (obstacle: Obstacle & { shape: Line }) =>
 	},
 	width: obstacle.shape.width,
 });
-export const isLineShaped = (obstacle: Obstacle): obstacle is Obstacle & { shape: Line } => obstacle.shape instanceof Line;
+export const isLineShaped = (obstacle: Obstacle): obstacle is Obstacle & { shape: Line } =>
+	obstacle.shape instanceof Line;

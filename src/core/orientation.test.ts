@@ -23,10 +23,10 @@ describe('getNextOrientation', () => {
 		while (step <= 4) {
 			orientations.push(getNextOrientation(OrientationCode.NorthWest, step++));
 		}
-		expect(orientations).toEqual([87, 65, 155, 148])
+		expect(orientations).toEqual([87, 65, 155, 148]);
 	});
 	test('step 0', () => {
-		const orientation = getNextOrientation(OrientationCode.NorthWest, 0)
-		expect(orientation).toEqual(OrientationCode.NorthWest)
+		const orientation = getNextOrientation(OrientationCode.NorthWest, 0);
+		expect(orientation).toEqual(OrientationCode.NorthWest);
 	});
 });
